@@ -1,3 +1,5 @@
+project_name: mjpeg-proxy
+
 archives:
   - format: binary
 
@@ -6,9 +8,32 @@ dist: build/dist
 builds:
   - goos:
       - linux
-    targets:
-      - linux_amd64
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
     flags:
       - -trimpath
 release:
   disable: true
+
+dockers:
+- image_templates:
+  - "eloo/mjpeg-proxy:latest-amd64"
+  use_buildx: true
+  dockerfile: Dockerfile
+  build_flag_templates:
+  - "--platform=linux/amd64"
+- image_templates:
+  - "eloo/mjpeg-proxy:latest-arm64v8"
+  use_buildx: true
+  goarch: arm64
+  dockerfile: Dockerfile
+  build_flag_templates:
+  - "--platform=linux/arm64/v8"
+docker_manifests:
+- name_template: eloo/mjpeg-proxy:latest
+  image_templates:
+  - eloo/mjpeg-proxy:latest-amd64
+  - eloo/mjpeg-proxy:latest-arm64v8
