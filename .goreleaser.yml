@@ -1,0 +1,14 @@
+archives:
+  - format: binary
+
+dist: build/dist
+
+builds:
+  - goos:
+      - linux
+    targets:
+      - linux_amd64
+    flags:
+      - -trimpath
+release:
+  disable: true

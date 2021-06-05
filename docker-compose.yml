@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  mjpeg-proxy:
+    image: eloo/mjpeg-proxy:latest
+    container_name: mjpeg-proxy
+    ports:
+      - "8080:8080"
+    command: "-bind :8081 -rate 15"
